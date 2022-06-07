@@ -11,6 +11,8 @@ import (
 	"time"
 )
 
+var reader = bufio.NewReader(os.Stdin)
+
 func main() {
 	add := flag.Bool("add", false, "Add two numbers")
 	sub := flag.Bool("subtract", false, "Subtract two numbers")
@@ -21,22 +23,8 @@ func main() {
 	fmt.Println("Welcome to the simple calculator!")
 	fmt.Println(time.Now().Format(time.ANSIC))
 
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("Please insert the first value: ")
-	firstInput, _ := reader.ReadString('\n')
-	firstValue, err := strconv.ParseFloat(strings.TrimSpace(firstInput), 64)
-	if err != nil {
-		println(err.Error())
-		panic("Invalid input, must be a number.")
-	}
-
-	fmt.Print("Please insert the second value: ")
-	secondInput, _ := reader.ReadString('\n')
-	secondValue, err := strconv.ParseFloat(strings.TrimSpace(secondInput), 64)
-	if err != nil {
-		println(err.Error())
-		panic("Invalid input, must be a number.")
-	}
+	firstValue := getInput()
+	secondValue := getInput()
 
 	switch {
 	case *add:
@@ -51,6 +39,17 @@ func main() {
 		fmt.Fprintln(os.Stderr, "Please use one of the following flags when calling the application -add, -subtract, -multiply or -divide")
 		os.Exit(1)
 	}
+}
+
+func getInput() float64 {
+	fmt.Print("Please insert your value: ")
+	input, _ := reader.ReadString('\n')
+	value, err := strconv.ParseFloat(strings.TrimSpace(input), 64)
+	if err != nil {
+		println(err.Error())
+		panic("Invalid input, must be a number.")
+	}
+	return value
 }
 
 func addition(firstValue float64, secondValue float64) float64 {
