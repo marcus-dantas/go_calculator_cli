@@ -48,7 +48,7 @@ func main() {
 	case *div:
 		fmt.Printf("Division: %.2f \n", division(firstValue, secondValue))
 	default:
-		fmt.Fprintln(os.Stderr, "Wrong option plase use one of the following flags -add, -subtract, -multiply or -divide")
+		fmt.Fprintln(os.Stderr, "Please use one of the following flags when calling the application -add, -subtract, -multiply or -divide")
 		os.Exit(1)
 	}
 }
